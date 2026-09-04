@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Raja Game Predictor</title>
+    <style>
+        body {
+            background-color: rgba(18, 18, 18, 0.95);
+            color: #00ff66;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 10px;
+            user-select: none;
+        }
+        .container {
+            background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+            border: 1px solid #00ff66;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+        }
+        h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+        .box {
+            background: #121212;
+            border: 1px dashed #00ff66;
+            border-radius: 8px;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .result-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff66;
+            margin: 5px 0;
+            text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+        }
+        .number-badge {
+            display: inline-block;
+            background: #00ff66;
+            color: #000;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 50%;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        .status {
+            font-size: 10px;
+            color: #ffcc00;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3>RAJA PREDICTOR</h3>
+        <div class="info-row">
+            <span>Period: <b id="period" style="color:#fff;">20260605101</b></span>
+            <span>Timer: <b id="timer" style="color:#ff3333;">30s</b></span>
+        </div>
+
+        <div class="box">
+            <div style="font-size: 11px; color: #bbb;">PREDICTION RESULT</div>
+            <div class="result-text" id="result">WAIT...</div>
+            <div>Number: <span id="numResult" class="number-badge">-</span></div>
+        </div>
+
+        <div class="status" id="status">Status: Analyzing Server...</div>
+    </div>
+
+    <script>
+        let counter = 30;
+        let basePeriod = 20260605100;
+
+        function updatePredictor() {
+            // Randomly pick Big or Small
+            const outcomes = ["BIG", "SMALL"];
+            const selectedOutcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+            
+            // Random number between 0 to 9
+            const selectedNumber = Math.floor(Math.random() * 10);
+
+            // Update UI
+            document.getElementById('result').innerText = selectedOutcome;
+            document.getElementById('numResult').innerText = selectedNumber;
+            document.getElementById('status').innerText = "Status: Success (AI Connected)";
+            
+            // Color adjustment based on Big/Small
+            if(selectedOutcome === "BIG") {
+                document.getElementById('result').style.color = "#00ff66";
+            } else {
+                document.getElementById('result').style.color = "#3399ff";
+            }
+        }
+
+        // Timer and Period loop
+        setInterval(() => {
+            counter--;
+            if (counter < 0) {
+                counter = 30;
+                basePeriod++;
+                document.getElementById('period').innerText = basePeriod;
+                updatePredictor();
+            }
+            document.getElementById('timer').innerText = counter + "s";
+        }, 1000);
+
+        // Initial trigger
+        updatePredictor();
+    </script>
+
+</body>
+</html>
